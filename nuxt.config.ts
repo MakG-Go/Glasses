@@ -4,9 +4,9 @@ export default defineNuxtConfig({
     // app: {
     //     pageTransition: { name: 'page', mode: 'out-in' }
     //   },
-    app: {
-      baseURL: '/nuxt-github-pages/'
-    },
+    // app: {
+    //   baseURL: '/nuxt-github-pages/'
+    // },
   
     css: ["@/assets/sass/app.scss"], // add
     vite: {
