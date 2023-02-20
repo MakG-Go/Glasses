@@ -35,9 +35,9 @@ export default class CreateModel {
                     otherMesh.userData[child.name] = child.material
                     child.material.transparent = true
                     child.material.envMap = material
-                    child.material.envMapIntensity = 2
+                    child.material.envMapIntensity = 5
    
-                    child.material.metalness = 0.5
+                    // child.material.metalness = 0.7
 
                     child.material.needsUpdate = true
 

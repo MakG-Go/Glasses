@@ -41,9 +41,9 @@ export default {
       },
       enviermens: "/environmentMaps",
       colorGlass:{
-        index: "#0AB7BF",
-        about: "#0AB7BF",
-        portfolio: "#0AB7BF",
+        index: "#ABABFF",
+        about: "#ABABFF",
+        portfolio: "#ABABFF",
       },
       colorDecor: {
         index: "#00527C",
@@ -85,11 +85,12 @@ export default {
       target["_decor"].color.set(this.color);
       target["_frame"].color.set(this.frameColor);
       target["_glass"].color.set(this.glassColor);
-      target["_glass"].envMapIntensity = 5;
+      target["_glass"].envMapIntensity = 3;
 
       // target["_glass"].emissive.set(this.color);
-      target["_glass"].opacity = 0.5;
-      target["_glass"].roughness = 0.05;
+      target["_glass"].metalness = 0.7
+      target["_glass"].opacity = 0.25;
+      target["_glass"].roughness = 0;
     },
   },
   methods: {
@@ -127,7 +128,7 @@ export default {
       this.renderer.shadowMap.enabled = true;
       this.renderer.physicallyCorrectLights = true;
       this.renderer.outputEncoding = THREE.sRGBEncoding;
-      this.renderer.toneMapping = THREE.NoToneMapping;
+      this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
       this.renderer.setClearColor("black", 0);
       this.canvas.appendChild(this.renderer.domElement);
 
@@ -153,6 +154,11 @@ export default {
         this.enviermens + "/4/pz.jpg",
         this.enviermens + "/4/nz.jpg",
       ]);
+
+      
+      this.environmentMap.minFilter = THREE.NearestFilter
+      this.environmentMap.magFilter = THREE.NearestFilter
+      this.environmentMap.generateMipmaps = false
 
       this.environmentMap.encoding = THREE.sRGBEncoding;
 
@@ -226,7 +232,7 @@ export default {
       this.directionLight = new THREE.DirectionalLight({
         color: "#ffffff",
       });
-      this.directionLight.intensity = 6;
+      this.directionLight.intensity = 0.2;
       this.directionLight.castShadow = false;
       this.directionLight.shadow.camera.far = 10;
       this.directionLight.shadow.camera.near = 0.01;
@@ -291,14 +297,15 @@ export default {
 
       if (meshesStoreLength > 0) {
         if (this.start) {
-          console.log('1')
+
           this.meshes["Glasses"].userData["_decor"].color.set(this.color);
           this.meshes["Glasses"].userData["_frame"].color.set(this.frameColor);
           this.meshes["Glasses"].userData["_glass"].color.set(this.glassColor);
-          this.meshes["Glasses"].userData["_glass"].envMapIntensity = 2;
+          this.meshes["Glasses"].userData["_glass"].envMapIntensity = 3;
 
           // this.meshes["Glasses"].userData["_glass"].emissive.set(this.color);
-          this.meshes["Glasses"].userData["_glass"].opacity = 0.5;
+          this.meshes["Glasses"].userData["_glass"].opacity = 0.25;
+          this.meshes["Glasses"].userData.metalness = 0.7
           this.meshes["Glasses"].userData["_glass"].roughness = 0;
           this.start = false
         }
