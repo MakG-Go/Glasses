@@ -1,7 +1,7 @@
 <template >
       
     <div>
-       <gltitle :title = "'About'"></gltitle>
+       <gltitle :title = "'Lemon'"></gltitle>
     </div>
      
 </template>

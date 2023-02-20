@@ -1,6 +1,6 @@
 <template >
   <div>
-    <gltitle :title = "'Something'"></gltitle>
+    <gltitle :title = "'Red'"></gltitle>
   </div>
 </template>
 <script>

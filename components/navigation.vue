@@ -3,13 +3,13 @@
     <nav>
       <ul class="webgl__navigation">
         <li class="webgl__navigation_item">
-          <nuxt-link class="webgl__navigation_btn" to="/">HOME</nuxt-link>
+          <nuxt-link class="webgl__navigation_btn" to="/">BLUE</nuxt-link>
         </li>
         <li class="webgl__navigation_item">
-          <nuxt-link class="webgl__navigation_btn" to="/about">ABOUT</nuxt-link>
+          <nuxt-link class="webgl__navigation_btn" to="/about">LEMON</nuxt-link>
         </li>
         <li class="webgl__navigation_item">
-          <nuxt-link class="webgl__navigation_btn" to="/portfolio">Portfolio</nuxt-link>
+          <nuxt-link class="webgl__navigation_btn" to="/portfolio">RED</nuxt-link>
         </li>
       </ul>
     </nav>

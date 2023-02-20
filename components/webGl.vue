@@ -41,9 +41,9 @@ export default {
       },
       enviermens: "/environmentMaps",
       colorGlass:{
-        index: "#ABABFF",
-        about: "#ABABFF",
-        portfolio: "#ABABFF",
+        index: "#7e7eff",
+        about: "#7e7eff",
+        portfolio: "#7e7eff",
       },
       colorDecor: {
         index: "#00527C",
@@ -88,8 +88,8 @@ export default {
       target["_glass"].envMapIntensity = 3;
 
       // target["_glass"].emissive.set(this.color);
-      target["_glass"].metalness = 0.7
-      target["_glass"].opacity = 0.25;
+      target["_glass"].metalness = 1
+      target["_glass"].opacity = 0.8;
       target["_glass"].roughness = 0;
     },
   },
@@ -304,8 +304,8 @@ export default {
           this.meshes["Glasses"].userData["_glass"].envMapIntensity = 3;
 
           // this.meshes["Glasses"].userData["_glass"].emissive.set(this.color);
-          this.meshes["Glasses"].userData["_glass"].opacity = 0.25;
-          this.meshes["Glasses"].userData.metalness = 0.7
+          this.meshes["Glasses"].userData["_glass"].opacity = 0.8;
+          this.meshes["Glasses"].userData.metalness = 1
           this.meshes["Glasses"].userData["_glass"].roughness = 0;
           this.start = false
         }
