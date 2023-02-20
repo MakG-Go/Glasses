@@ -14,11 +14,11 @@ export default class CreateModel {
 
     get addModel() {
 
-        return this._loader(this.options.model, this.options.scene, this.options.scale, this.options.name, this.options.meshStore, this.options.material, this.options.position, this.options.rotationStatick,)
+        return this._loader(this.options.model, this.options.scene, this.options.scale, this.options.name, this.options.meshStore, this.options.material, )
 
     }
 
-    _loader(model, scene, scale, name,mStore, material, position, rotationStatic,) {
+    _loader(model, scene, scale, name,mStore, material) {
 
 
         new GLTFLoader().load(model, (gltf) => {
@@ -33,11 +33,13 @@ export default class CreateModel {
             	if (child.isMesh) {
 
                     otherMesh.userData[child.name] = child.material
-                    child.material.transparent=true
+                    child.material.transparent = true
+                    child.material.envMap = material
                     child.material.envMapIntensity = 2
-                    // child.material.emissive.set('red')
-                    child.material.emissiveIntensity = 10
-                    child.material.metalness = 0.05
+   
+                    child.material.metalness = 0.5
+
+                    child.material.needsUpdate = true
 
             		// child.frustumCulled = false;
 
@@ -54,21 +56,21 @@ export default class CreateModel {
 
             otherMesh.name = name
 
-            if (rotationStatic) {
-                otherMesh.rotation.x = rotationStatic.x
-                otherMesh.rotation.y = rotationStatic.y
-                otherMesh.rotation.y = rotationStatic.z
-            }
+            // if (rotationStatic) {
+            //     otherMesh.rotation.x = rotationStatic.x
+            //     otherMesh.rotation.y = rotationStatic.y
+            //     otherMesh.rotation.y = rotationStatic.z
+            // }
 
             if (scale) {
                 otherMesh.scale.set(scale.x, scale.y, scale.z)
             }
 
-            if (position) {
-                otherMesh.position.x = position.x
-                otherMesh.position.y = position.y
-                otherMesh.position.z = position.z
-            }
+            // if (position) {
+            //     otherMesh.position.x = position.x
+            //     otherMesh.position.y = position.y
+            //     otherMesh.position.z = position.z
+            // }
 
             scene.add(otherMesh)
 

@@ -40,6 +40,11 @@ export default {
         scale: 1,
       },
       enviermens: "/environmentMaps",
+      colorGlass:{
+        index: "#0AB7BF",
+        about: "#0AB7BF",
+        portfolio: "#0AB7BF",
+      },
       colorDecor: {
         index: "#00527C",
         about: "#9FC924",
@@ -55,6 +60,7 @@ export default {
   beforeMount() {
     this.color = this.colorDecor[this.page];
     this.frameColor = this.colorFrame[this.page];
+    this.glassColor = this.colorGlass[this.page]
     this.sizes = this.getSizes();
     this.meshes = {};
     this.start = true;
@@ -73,11 +79,12 @@ export default {
     page: function (newValue, prevValue) {
       this.color = this.colorDecor[newValue];
       this.frameColor = this.colorFrame[newValue];
+      this.glassColor = this.colorGlass[newValue]
       let target = this.meshes["Glasses"].userData;
 
       target["_decor"].color.set(this.color);
       target["_frame"].color.set(this.frameColor);
-      target["_glass"].color.set(this.color);
+      target["_glass"].color.set(this.glassColor);
       target["_glass"].envMapIntensity = 5;
 
       // target["_glass"].emissive.set(this.color);
@@ -139,18 +146,18 @@ export default {
 
       this.cubeTextureLoader = new THREE.CubeTextureLoader();
       this.environmentMap = this.cubeTextureLoader.load([
-        this.enviermens + "/3/px.jpg",
-        this.enviermens + "/3/nx.jpg",
-        this.enviermens + "/3/py.jpg",
-        this.enviermens + "/3/ny.jpg",
-        this.enviermens + "/3/pz.jpg",
-        this.enviermens + "/3/nz.jpg",
+        this.enviermens + "/4/px.jpg",
+        this.enviermens + "/4/nx.jpg",
+        this.enviermens + "/4/py.jpg",
+        this.enviermens + "/4/ny.jpg",
+        this.enviermens + "/4/pz.jpg",
+        this.enviermens + "/4/nz.jpg",
       ]);
 
       this.environmentMap.encoding = THREE.sRGBEncoding;
 
-      this.scene.background = this.environmentMap;
-      this.scene.environment = this.environmentMap;
+      // this.scene.background = this.environmentMap;
+      // this.scene.environment = this.environmentMap;
 
       /** Controls */
       this.controls = new OrbitControls(this.camera, this.canvas);
@@ -189,6 +196,7 @@ export default {
         ),
         name: "Glasses",
         meshStore: this.meshes,
+        material: this.environmentMap
       });
 
       glass.addModel;
@@ -286,12 +294,12 @@ export default {
           console.log('1')
           this.meshes["Glasses"].userData["_decor"].color.set(this.color);
           this.meshes["Glasses"].userData["_frame"].color.set(this.frameColor);
-          this.meshes["Glasses"].userData["_glass"].color.set(this.color);
+          this.meshes["Glasses"].userData["_glass"].color.set(this.glassColor);
           this.meshes["Glasses"].userData["_glass"].envMapIntensity = 2;
 
           // this.meshes["Glasses"].userData["_glass"].emissive.set(this.color);
-          this.meshes["Glasses"].userData["_glass"].opacity = 0.75;
-          this.meshes["Glasses"].userData["_glass"].roughness = 0.05;
+          this.meshes["Glasses"].userData["_glass"].opacity = 0.5;
+          this.meshes["Glasses"].userData["_glass"].roughness = 0;
           this.start = false
         }
 
