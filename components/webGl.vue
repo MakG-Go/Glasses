@@ -52,11 +52,14 @@ export default {
       },
     };
   },
-  mounted() {
+  beforeMount() {
     this.color = this.colorDecor[this.page];
     this.frameColor = this.colorFrame[this.page];
     this.sizes = this.getSizes();
     this.meshes = {};
+    this.start = true;
+  },
+  mounted() {
     this.init();
     this.resize();
     this.tick();
@@ -70,6 +73,16 @@ export default {
     page: function (newValue, prevValue) {
       this.color = this.colorDecor[newValue];
       this.frameColor = this.colorFrame[newValue];
+      let target = this.meshes["Glasses"].userData;
+
+      target["_decor"].color.set(this.color);
+      target["_frame"].color.set(this.frameColor);
+      target["_glass"].color.set(this.color);
+      target["_glass"].envMapIntensity = 5;
+
+      // target["_glass"].emissive.set(this.color);
+      target["_glass"].opacity = 0.5;
+      target["_glass"].roughness = 0.05;
     },
   },
   methods: {
@@ -143,7 +156,7 @@ export default {
       this.controls = new OrbitControls(this.camera, this.canvas);
       this.controls.enableDamping = true;
       this.controls.maxDistance = 0.8;
-      this.controls.minDistance = 0.35
+      this.controls.minDistance = 0.35;
 
       /**
        * Mesh
@@ -269,8 +282,19 @@ export default {
       let meshesStoreLength = Object.keys(this.meshes).length;
 
       if (meshesStoreLength > 0) {
-        this.meshes["Glasses"].userData["_decor"].set(this.color);
-        this.meshes["Glasses"].userData["_frame"].set(this.frameColor);
+        if (this.start) {
+          console.log('1')
+          this.meshes["Glasses"].userData["_decor"].color.set(this.color);
+          this.meshes["Glasses"].userData["_frame"].color.set(this.frameColor);
+          this.meshes["Glasses"].userData["_glass"].color.set(this.color);
+          this.meshes["Glasses"].userData["_glass"].envMapIntensity = 2;
+
+          // this.meshes["Glasses"].userData["_glass"].emissive.set(this.color);
+          this.meshes["Glasses"].userData["_glass"].opacity = 0.75;
+          this.meshes["Glasses"].userData["_glass"].roughness = 0.05;
+          this.start = false
+        }
+
         this.meshes["Glasses"].rotation.y += 0.005;
       }
 

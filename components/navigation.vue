@@ -31,6 +31,9 @@ export default {
     align-items: center;
     justify-content: flex-end;
     width: 100%;
+    @media (max-width: 719px) {
+      justify-content:center;
+    }
 
     &_item{
         &:not(:last-child){

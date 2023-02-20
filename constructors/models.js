@@ -25,10 +25,6 @@ export default class CreateModel {
 
             let originalMesh
             let cloneMesh
-
-            // console.log(gltf.scene)
-            // console.log('1')
-
             
             let otherMesh = gltf.scene
 
@@ -36,8 +32,12 @@ export default class CreateModel {
 
             	if (child.isMesh) {
 
-                    otherMesh.userData[child.name] = child.material.color
+                    otherMesh.userData[child.name] = child.material
+                    child.material.transparent=true
                     child.material.envMapIntensity = 2
+                    // child.material.emissive.set('red')
+                    child.material.emissiveIntensity = 10
+                    child.material.metalness = 0.05
 
             		// child.frustumCulled = false;
 
@@ -72,7 +72,7 @@ export default class CreateModel {
 
             scene.add(otherMesh)
 
-            mStore[otherMesh.name ]= otherMesh
+            mStore[otherMesh.name]= otherMesh
   
         }
         )
