@@ -2,17 +2,23 @@
   <div>
     <div class="webGl"></div>
     <div class="webGl__btn_container">
-      <!-- <btn
+      <btn
         @generate="check"
-        :mesh-color="'f33232'"
-        :button-color="'RED'"
+        :button-color="'red'"
+        :glasses-color="this.btnColorChange"
       ></btn>
 
       <btn
         @generate="check"
-        :mesh-color="'324ff3'"
-        :button-color="'BLUE'"
-      ></btn> -->
+        :button-color="'blue'"
+        :glasses-color="this.btnColorChange"
+      ></btn>
+
+      <btn
+        @generate="check"
+        :button-color="'lemon'"
+        :glasses-color="this.btnColorChange"
+      ></btn>
     </div>
   </div>
 </template>
@@ -20,7 +26,7 @@
   
 <script>
 import store from "~~/store";
-// import btn from "./ui/btn.vue";
+import btn from "./ui/btn.vue";
 import * as dat from "lil-gui";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls.js";
@@ -28,19 +34,38 @@ import CreateModel from "../constructors/models.js";
 
 export default {
   components: {
-    // btn,
+    btn,
   },
   data() {
     return {
       states: [],
-      color: "#00527C",
+      color: {},
       glasses: {
         // 'model':'_nuxt/models/vega-black-blue.glb',
         model: "/models/glasses.glb",
         scale: 1,
       },
       enviermens: "/environmentMaps",
-      colorGlass:{
+
+      btnColorChange: {
+        blue: {
+          _glass: "#7e7eff",
+          _frame: "black",
+          _decor: "#00527C",
+        },
+        red: {
+          _glass: "#7e7eff",
+          _frame: "black",
+          _decor: "#A20016",
+        },
+        lemon: {
+          _glass: "#7e7eff",
+          _frame: "#A19C9C",
+          _decor: "#9FC924",
+        },
+      },
+
+      colorGlass: {
         index: "#7e7eff",
         about: "#7e7eff",
         portfolio: "#7e7eff",
@@ -60,7 +85,7 @@ export default {
   beforeMount() {
     this.color = this.colorDecor[this.page];
     this.frameColor = this.colorFrame[this.page];
-    this.glassColor = this.colorGlass[this.page]
+    this.glassColor = this.colorGlass[this.page];
     this.sizes = this.getSizes();
     this.meshes = {};
     this.start = true;
@@ -79,7 +104,7 @@ export default {
     page: function (newValue, prevValue) {
       this.color = this.colorDecor[newValue];
       this.frameColor = this.colorFrame[newValue];
-      this.glassColor = this.colorGlass[newValue]
+      this.glassColor = this.colorGlass[newValue];
       let target = this.meshes["Glasses"].userData;
 
       target["_decor"].color.set(this.color);
@@ -88,9 +113,19 @@ export default {
       target["_glass"].envMapIntensity = 3;
 
       // target["_glass"].emissive.set(this.color);
-      target["_glass"].metalness = 1
+      target["_glass"].metalness = 1;
       target["_glass"].opacity = 0.8;
       target["_glass"].roughness = 0;
+    },
+
+    color() {
+      if (Object.keys(this.meshes).length > 0) {
+        console.log(this.meshes["Glasses"]);
+        let target = this.meshes["Glasses"].userData;
+        target["_decor"].color.set(this.color["_decor"]);
+        target["_frame"].color.set(this.color["_frame"]);
+        target["_glass"].color.set(this.color["_glass"]);
+      }
     },
   },
   methods: {
@@ -108,7 +143,7 @@ export default {
         45,
         this.sizes.width / this.sizes.height,
         0.01,
-        100
+        10
       );
 
       this.camera.position.x = 0;
@@ -155,10 +190,9 @@ export default {
         this.enviermens + "/4/nz.jpg",
       ]);
 
-      
-      this.environmentMap.minFilter = THREE.NearestFilter
-      this.environmentMap.magFilter = THREE.NearestFilter
-      this.environmentMap.generateMipmaps = false
+      this.environmentMap.minFilter = THREE.NearestFilter;
+      this.environmentMap.magFilter = THREE.NearestFilter;
+      this.environmentMap.generateMipmaps = false;
 
       this.environmentMap.encoding = THREE.sRGBEncoding;
 
@@ -202,7 +236,7 @@ export default {
         ),
         name: "Glasses",
         meshStore: this.meshes,
-        material: this.environmentMap
+        material: this.environmentMap,
       });
 
       glass.addModel;
@@ -297,7 +331,6 @@ export default {
 
       if (meshesStoreLength > 0) {
         if (this.start) {
-
           this.meshes["Glasses"].userData["_decor"].color.set(this.color);
           this.meshes["Glasses"].userData["_frame"].color.set(this.frameColor);
           this.meshes["Glasses"].userData["_glass"].color.set(this.glassColor);
@@ -305,9 +338,9 @@ export default {
 
           // this.meshes["Glasses"].userData["_glass"].emissive.set(this.color);
           this.meshes["Glasses"].userData["_glass"].opacity = 0.8;
-          this.meshes["Glasses"].userData.metalness = 1
+          this.meshes["Glasses"].userData.metalness = 1;
           this.meshes["Glasses"].userData["_glass"].roughness = 0;
-          this.start = false
+          this.start = false;
         }
 
         this.meshes["Glasses"].rotation.y += 0.005;
@@ -343,6 +376,10 @@ export default {
         this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       });
     },
+
+    check(obj, ndx) {
+      this.color = obj[ndx];
+    },
   },
 };
 </script>
@@ -358,6 +395,7 @@ export default {
       z-index: 1;
       display: flex;
       justify-content: center;
+      max-width: 300px;
       position: absolute;
       bottom: 150px;
       left: 0;

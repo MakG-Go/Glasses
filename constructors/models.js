@@ -9,7 +9,6 @@ export default class CreateModel {
     constructor(options) {
 
         this.options = options
-        this.mod
     }
 
     get addModel() {
